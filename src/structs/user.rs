@@ -1,5 +1,5 @@
-use serde::Deserialize;
 use crate::structs::Property;
+use serde::Deserialize;
 
 pub const PREFERRED_LANGUAGE_PROPERTY_NAME: &str = "preferredLanguage";
 
@@ -11,13 +11,14 @@ pub struct User {
     /// User properties
     /// Available property:
     /// - preferredLanguage: (optional) user's preferred language, e.g. `en`, `zh_CN`
-    pub properties: Vec<Property>
+    pub properties: Vec<Property>,
 }
 
 impl User {
     /// Get the user's preferred language if existed.
     pub fn get_preferred_language(&self) -> Option<&String> {
-        self.properties.iter()
+        self.properties
+            .iter()
             .find(|p| p.name == PREFERRED_LANGUAGE_PROPERTY_NAME)
             .map(|p| &p.value)
     }

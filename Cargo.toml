@@ -9,7 +9,7 @@ repository = "https://github.com/ElectronicWave/nidhogg"
 description = "Authenticator for Yggdrasil server"
 
 [dependencies]
-reqwest = { version = "0.13.5", features = ["json", "stream", "default-tls"] }
+reqwest = { version = "0.13.5", features = ["json", "stream", "default-tls", "multipart"] }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 thiserror = "2.0.21"

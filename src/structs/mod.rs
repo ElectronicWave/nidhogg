@@ -1,10 +1,11 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-pub mod user;
+pub mod meta;
 pub mod profile;
 pub mod textures;
+pub mod user;
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Property {
     /// Property name
     pub name: String,
@@ -15,5 +16,5 @@ pub struct Property {
     /// Digital signature (optional)
     /// Format: `Base64`
     /// Algorithm: `SHA1withRSA`
-    pub signature: Option<String>
+    pub signature: Option<String>,
 }

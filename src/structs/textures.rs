@@ -7,24 +7,24 @@ pub struct TextureProperty {
     pub timestamp: i64,
 
     /// Profile UUID (Unhyphenated)
-    #[serde(rename="profileId")]
+    #[serde(rename = "profileId")]
     pub profile_id: String,
 
     /// Profile name
-    #[serde(rename="profileName")]
+    #[serde(rename = "profileName")]
     pub name: String,
 
     /// Profile textures
-    pub textures: Textures
+    pub textures: Textures,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Textures {
-    #[serde(rename="SKIN")]
+    #[serde(rename = "SKIN")]
     pub skin: Option<Texture>,
 
-    #[serde(rename="CAPE")]
-    pub cape: Option<Texture>
+    #[serde(rename = "CAPE")]
+    pub cape: Option<Texture>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -33,12 +33,12 @@ pub struct Texture {
     pub url: String,
 
     /// Texture metadata, if none, it need not be included
-    pub metadata: Option<Metadata>
+    pub metadata: Option<Metadata>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Metadata {
-    pub model: ModelType
+    pub model: ModelType,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -49,5 +49,5 @@ pub enum ModelType {
 
     /// Skin with thinner arms (3px)
     #[serde(rename = "slim")]
-    SLIM
+    SLIM,
 }
