@@ -1,20 +1,20 @@
-use crate::client::{Nidhogg, NidhoggError};
+use crate::client::Nidhogg;
+use crate::error::NidhoggError;
 use crate::structs::profile::Profile;
 use crate::structs::user::User;
 use serde::{Deserialize, Serialize};
 
 impl Nidhogg {
     pub async fn refresh(&self, refresh: &Refresh) -> Result<RefreshResponse, NidhoggError> {
-        let body = serde_json::to_string(refresh)?;
-        let response = self.post_request("/authserver/refresh", &body).await?;
-
-        match response {
-            Some(response) => {
-                let refresh_response: RefreshResponse = serde_json::from_str(&response)?;
-                Ok(refresh_response)
-            }
-            None => Err(NidhoggError::Other("No response from server".to_string())),
-        }
+        Ok(self
+            .client
+            .post(format!("{}/authserver/refresh", self.yggdrasil_url))
+            .json(refresh)
+            .send()
+            .await?
+            .error_for_status()?
+            .json::<RefreshResponse>()
+            .await?)
     }
 }
 

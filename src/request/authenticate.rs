@@ -1,4 +1,5 @@
-use crate::client::{Nidhogg, NidhoggError};
+use crate::client::Nidhogg;
+use crate::error::NidhoggError;
 use crate::structs::profile::Profile;
 use crate::structs::user::User;
 use serde::{Deserialize, Serialize};
@@ -8,16 +9,15 @@ impl Nidhogg {
         &self,
         authenticate: &Authenticate,
     ) -> Result<AuthenticateResponse, NidhoggError> {
-        let body = serde_json::to_string(authenticate)?;
-        let response = self.post_request("/authserver/authenticate", &body).await?;
-
-        match response {
-            Some(response) => {
-                let authenticate_response: AuthenticateResponse = serde_json::from_str(&response)?;
-                Ok(authenticate_response)
-            }
-            None => Err(NidhoggError::Other("No response from server".to_string())),
-        }
+        Ok(self
+            .client
+            .post(format!("{}/authserver/authenticate", self.yggdrasil_url))
+            .json(authenticate)
+            .send()
+            .await?
+            .error_for_status()?
+            .json::<AuthenticateResponse>()
+            .await?)
     }
 }
 
@@ -42,7 +42,7 @@ impl Authenticate {
         password: String,
         client_token: Option<String>,
         request_user: bool,
-    ) -> Authenticate {
+    ) -> Self {
         Self {
             username,
             password,
@@ -59,8 +59,8 @@ pub struct Agent {
     pub version: i64,
 }
 
-impl Agent {
-    pub fn default() -> Self {
+impl Default for Agent {
+    fn default() -> Self {
         Self {
             name: "Minecraft".to_string(),
             version: 1,
