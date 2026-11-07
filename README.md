@@ -15,7 +15,7 @@ nidhogg = "0.1.0"
 ```
 
 ## Sample Code
-
+> See also [libs.rs](./src/lib.rs) tests crate.
 ```rust
 use std::fs;
 

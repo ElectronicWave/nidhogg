@@ -1,7 +1,7 @@
 use crate::error::NidhoggError;
-use crate::structs::meta::ServerMeta;
-use reqwest::Client;
+use crate::structs::meta::Meta;
 use reqwest::header::{HeaderMap, HeaderValue};
+use reqwest::Client;
 
 pub struct Nidhogg {
     pub yggdrasil_url: String,
@@ -25,14 +25,13 @@ impl Nidhogg {
         })
     }
 
-    pub async fn metadata(&self) -> Result<ServerMeta, NidhoggError> {
+    pub async fn metadata(&self) -> Result<Meta, NidhoggError> {
         let response = self
             .client
             .get(format!("{}/", self.yggdrasil_url))
             .send()
             .await?
             .error_for_status()?;
-
         Ok(response.json().await?)
     }
 }
