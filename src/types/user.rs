@@ -1,4 +1,4 @@
-use crate::structs::Property;
+use crate::types::Property;
 use serde::Deserialize;
 
 pub const PREFERRED_LANGUAGE_PROPERTY_NAME: &str = "preferredLanguage";

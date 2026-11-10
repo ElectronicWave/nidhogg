@@ -1,6 +1,6 @@
 use crate::client::Nidhogg;
 use crate::error::NidhoggError;
-use crate::structs::textures::ModelType;
+use crate::types::textures::ModelType;
 use reqwest::multipart::{Form, Part};
 use std::fmt::Display;
 

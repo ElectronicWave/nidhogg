@@ -1,7 +1,9 @@
 pub mod client;
 pub mod error;
 pub mod request;
-pub mod structs;
+#[cfg(feature = "server")]
+pub mod server;
+pub mod types;
 
 #[cfg(test)]
 mod tests {

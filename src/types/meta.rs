@@ -1,6 +1,6 @@
 use crate::error::NidhoggError;
-use base64::prelude::BASE64_STANDARD;
 use base64::Engine;
+use base64::prelude::BASE64_STANDARD;
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Debug, Serialize)]

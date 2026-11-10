@@ -1,7 +1,7 @@
 use crate::error::NidhoggError;
-use crate::structs::meta::Meta;
-use reqwest::header::{HeaderMap, HeaderValue};
+use crate::types::meta::Meta;
 use reqwest::Client;
+use reqwest::header::{HeaderMap, HeaderValue};
 
 pub struct Nidhogg {
     pub yggdrasil_url: String,

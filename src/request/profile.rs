@@ -1,6 +1,6 @@
 use crate::client::Nidhogg;
 use crate::error::NidhoggError;
-use crate::structs::profile::Profile;
+use crate::types::profile::Profile;
 
 impl Nidhogg {
     pub async fn get_profile(&self, uuid: String, unsigned: bool) -> Result<Profile, NidhoggError> {

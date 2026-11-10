@@ -1,5 +1,5 @@
-use crate::structs::textures::TextureProperty;
-use crate::structs::Property;
+use crate::types::Property;
+use crate::types::textures::TextureProperty;
 use base64::prelude::BASE64_STANDARD;
 use base64::{DecodeError, Engine};
 use serde::{Deserialize, Serialize};

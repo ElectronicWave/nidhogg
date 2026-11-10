@@ -16,5 +16,6 @@ pub struct Property {
     /// Digital signature (optional)
     /// Format: `Base64`
     /// Algorithm: `SHA1withRSA`
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub signature: Option<String>,
 }

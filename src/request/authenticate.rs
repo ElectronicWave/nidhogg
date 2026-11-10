@@ -1,7 +1,7 @@
 use crate::client::Nidhogg;
 use crate::error::NidhoggError;
-use crate::structs::profile::Profile;
-use crate::structs::user::User;
+use crate::types::profile::Profile;
+use crate::types::user::User;
 use serde::{Deserialize, Serialize};
 
 impl Nidhogg {
