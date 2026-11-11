@@ -27,7 +27,7 @@ It does not implement `/authserver/*`. Offline credentials are constructed by th
 
 ```toml
 [dependencies]
-nidhogg = { version = "0.2.0", features = ["server"] }
+nidhogg = { version = "0.3.0", features = ["server"] }
 ```
 
 ```rust
