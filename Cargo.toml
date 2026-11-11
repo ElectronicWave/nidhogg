@@ -24,4 +24,6 @@ tokio = { version = "1.54.1", features = ["full"] }
 
 [features]
 default = []
+authlib-injector = []
+authlib-injector-embed = ["authlib-injector"]
 server = ["dep:md-5", "dep:rsa", "dep:sha1", "dep:url"]

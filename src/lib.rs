@@ -1,3 +1,5 @@
+#[cfg(feature = "authlib-injector")]
+pub mod authlib_injector;
 pub mod client;
 pub mod error;
 pub mod request;
