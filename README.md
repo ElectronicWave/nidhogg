@@ -1,4 +1,6 @@
 # nidhogg
+> English | [简体中文](./README_CN.md)
+
 This Rust library provides an interface for interacting with Yggdrasil's authentication system. It includes models for handling authentication requests, responses, and errors, as well as a client for sending HTTP requests to authenticate, refresh, validate, and sign out users.  
 Implemented Standard: [authlib-injector](https://yushijinhun.github.io/authlib-injector/en/yggdrasil-server-technical-specification.html)
 
@@ -61,7 +63,7 @@ For LAN clients, pass a reachable address with `public_base_url`, for example `h
 To use the `nidhogg` library, add it as a dependency in your `Cargo.toml` file:
 ```toml
 [dependencies]
-nidhogg = "0.1.0"
+nidhogg = "0.3.0"
 ```
 
 ## Sample Code
