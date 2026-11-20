@@ -37,10 +37,10 @@ mod tests {
         let nidhogg = Nidhogg::new(MOCK_API_ROOT)?;
         let authenticate_response = nidhogg
             .authenticate(&Authenticate::new(
-                "test1@example.com".to_string(),
-                "111111".to_string(),
-                None,
-                false,
+                "test3@example.com".to_string(),
+                "333333".to_string(),
+                Some("123128123".to_string()),
+                true,
             ))
             .await?;
         println!("{:?}", &authenticate_response);
