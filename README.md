@@ -64,6 +64,22 @@ To use the `nidhogg` library, add it as a dependency in your `Cargo.toml` file:
 nidhogg = "0.1.0"
 ```
 
+### TLS Backend
+`reqwest` is built without its default features. Select exactly one TLS backend:
+
+- `tls-aws-lc` (default): rustls with `aws-lc-rs`, keeping the previous behavior.
+- `tls-rustls-no-provider`: rustls without a bundled provider. Install a process-wide rustls provider before making requests.
+- `tls-native`: the platform TLS stack (`schannel` on Windows, the system store elsewhere).
+- `tls-native-vendored`: `tls-native` with a vendored OpenSSL, for static or cross-compiled builds.
+
+Disable default features to choose a backend other than `tls-aws-lc`:
+```toml
+[dependencies]
+nidhogg = { version = "0.3.0", default-features = false, features = ["tls-native"] }
+```
+
+The backend features are mutually exclusive. Enabling more than one compiles every selected backend into the binary.
+
 ## Sample Code
 > See also [libs.rs](./src/lib.rs) tests crate.
 ```rust

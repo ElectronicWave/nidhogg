@@ -11,6 +11,7 @@ pub struct User {
     /// User properties
     /// Available property:
     /// - preferredLanguage: (optional) user's preferred language, e.g. `en`, `zh_CN`
+    #[serde(default)]
     pub properties: Vec<Property>,
 }
 

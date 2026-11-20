@@ -58,7 +58,9 @@ pub struct RefreshResponse {
     pub client_token: String,
 
     #[serde(rename = "selectedProfile")]
+    #[serde(default)]
     pub selected_profile: Option<Profile>,
 
+    #[serde(default)]
     pub user: Option<User>,
 }

@@ -9,7 +9,7 @@ repository = "https://github.com/ElectronicWave/nidhogg"
 description = "Authenticator for Yggdrasil server"
 
 [dependencies]
-reqwest = { version = "0.13.5", features = ["json", "stream", "default-tls", "multipart"] }
+reqwest = { version = "0.13.5", default-features = false, features = ["json", "stream", "multipart"] }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 thiserror = "2.0.21"
@@ -23,7 +23,11 @@ sha1 = { version = "0.11.0", features = ["oid"], optional = true }
 tokio = { version = "1.54.1", features = ["full"] }
 
 [features]
-default = []
+default = ["tls-aws-lc"]
 authlib-injector = []
 authlib-injector-embed = ["authlib-injector"]
 server = ["dep:md-5", "dep:rsa", "dep:sha1", "dep:url"]
+tls-aws-lc = ["reqwest/rustls"]
+tls-native = ["reqwest/native-tls"]
+tls-native-vendored = ["reqwest/native-tls-vendored"]
+tls-rustls-no-provider = ["reqwest/rustls-no-provider"]

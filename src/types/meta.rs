@@ -23,32 +23,42 @@ impl Meta {
 #[derive(Deserialize, Debug, Serialize)]
 pub struct ServerMeta {
     #[serde(rename = "serverName")]
+    #[serde(default)]
     pub server_name: Option<String>,
 
     #[serde(rename = "implementationName")]
+    #[serde(default)]
     pub implementation_name: Option<String>,
 
     #[serde(rename = "implementationVersion")]
+    #[serde(default)]
     pub implementation_version: Option<String>,
 
+    #[serde(default)]
     pub links: Option<Links>,
 
     #[serde(rename = "feature.non_email_login")]
+    #[serde(default)]
     pub non_email_login: Option<bool>,
 
     #[serde(rename = "feature.legacy_skin_api")]
+    #[serde(default)]
     pub legacy_skin_api: Option<bool>,
 
     #[serde(rename = "feature.no_mojang_namespace")]
+    #[serde(default)]
     pub no_mojang_namespace: Option<bool>,
 
     #[serde(rename = "feature.enable_mojang_anti_features")]
+    #[serde(default)]
     pub enable_mojang_anti_features: Option<bool>,
 
     #[serde(rename = "feature.enable_profile_key")]
+    #[serde(default)]
     pub enable_profile_key: Option<bool>,
 
     #[serde(rename = "feature.username_check")]
+    #[serde(default)]
     pub username_check: Option<bool>,
 }
 

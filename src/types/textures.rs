@@ -21,9 +21,11 @@ pub struct TextureProperty {
 #[derive(Debug, Clone, Deserialize)]
 pub struct Textures {
     #[serde(rename = "SKIN")]
+    #[serde(default)]
     pub skin: Option<Texture>,
 
     #[serde(rename = "CAPE")]
+    #[serde(default)]
     pub cape: Option<Texture>,
 }
 
@@ -33,6 +35,7 @@ pub struct Texture {
     pub url: String,
 
     /// Texture metadata, if none, it need not be included
+    #[serde(default)]
     pub metadata: Option<Metadata>,
 }
 

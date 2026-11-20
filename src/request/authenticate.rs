@@ -77,10 +77,13 @@ pub struct AuthenticateResponse {
     pub client_token: String,
 
     #[serde(rename = "availableProfiles")]
+    #[serde(default)]
     pub available_profiles: Option<Vec<Profile>>,
 
     #[serde(rename = "selectedProfile")]
+    #[serde(default)]
     pub selected_profile: Option<Profile>,
 
+    #[serde(default)]
     pub user: Option<User>,
 }

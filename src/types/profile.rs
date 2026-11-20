@@ -30,6 +30,7 @@ pub struct Profile {
     pub name: String,
 
     /// Profile properties (only needed in specific cases)
+    #[serde(default)]
     pub properties: Option<Vec<Property>>,
 }
 
