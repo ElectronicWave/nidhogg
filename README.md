@@ -29,7 +29,7 @@ It does not implement `/authserver/*`. Offline credentials are constructed by th
 
 ```toml
 [dependencies]
-nidhogg = { version = "0.3.0", features = ["server"] }
+nidhogg = { version = "0.3.1", features = ["server"] }
 ```
 
 ```rust
@@ -63,7 +63,7 @@ For LAN clients, pass a reachable address with `public_base_url`, for example `h
 To use the `nidhogg` library, add it as a dependency in your `Cargo.toml` file:
 ```toml
 [dependencies]
-nidhogg = "0.3.0"
+nidhogg = "0.3.1"
 ```
 
 ### TLS Backend
@@ -77,7 +77,7 @@ nidhogg = "0.3.0"
 Disable default features to choose a backend other than `tls-aws-lc`:
 ```toml
 [dependencies]
-nidhogg = { version = "0.3.0", default-features = false, features = ["tls-native"] }
+nidhogg = { version = "0.3.1", default-features = false, features = ["tls-native"] }
 ```
 
 The backend features are mutually exclusive. Enabling more than one compiles every selected backend into the binary.
