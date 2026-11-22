@@ -1,5 +1,5 @@
 use crate::client::Nidhogg;
-use crate::error::NidhoggError;
+use crate::error::Result;
 use crate::types::textures::ModelType;
 use reqwest::multipart::{Form, Part};
 use std::fmt::Display;
@@ -13,7 +13,7 @@ impl Nidhogg {
         texture: Vec<u8>,
         file_name: String,
         model_type: Option<ModelType>,
-    ) -> Result<(), NidhoggError> {
+    ) -> Result<()> {
         let url = format!("/api/user/profile/{unhyphenated_uuid}/{texture_type}");
 
         let model = match model_type {
@@ -43,7 +43,7 @@ impl Nidhogg {
         unhyphenated_uuid: String,
         access_token: String,
         texture_type: TextureType,
-    ) -> Result<(), NidhoggError> {
+    ) -> Result<()> {
         let url = format!("/api/user/profile/{unhyphenated_uuid}/{texture_type}");
         self.client
             .delete(format!("{}{}", self.yggdrasil_url, url))

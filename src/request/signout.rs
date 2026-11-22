@@ -1,12 +1,10 @@
 use crate::client::Nidhogg;
-use crate::error::NidhoggError;
+use crate::error::Result;
 use serde::Serialize;
 
 impl Nidhogg {
-    pub async fn signout(&self, signout: Signout) -> Result<(), NidhoggError> {
-        self.client
-            .post(format!("{}/authserver/signout", self.yggdrasil_url))
-            .json(&signout)
+    pub async fn signout(&self, signout: Signout) -> Result<()> {
+        self.post_json("/authserver/signout", &signout)
             .send()
             .await?
             .error_for_status()?;

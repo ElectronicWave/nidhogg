@@ -1,22 +1,18 @@
 use crate::client::Nidhogg;
-use crate::error::NidhoggError;
+use crate::error::Result;
 use serde::Serialize;
 
 impl Nidhogg {
-    pub async fn validate(&self, validate: &Tokens) -> Result<(), NidhoggError> {
-        self.client
-            .post(format!("{}/authserver/validate", self.yggdrasil_url))
-            .json(validate)
+    pub async fn validate(&self, validate: &Tokens) -> Result<()> {
+        self.post_json("/authserver/validate", validate)
             .send()
             .await?
             .error_for_status()?;
         Ok(())
     }
 
-    pub async fn invalidate(&self, validate: &Tokens) -> Result<(), NidhoggError> {
-        self.client
-            .post(format!("{}/authserver/invalidate", self.yggdrasil_url))
-            .json(validate)
+    pub async fn invalidate(&self, validate: &Tokens) -> Result<()> {
+        self.post_json("/authserver/invalidate", validate)
             .send()
             .await?
             .error_for_status()?;
