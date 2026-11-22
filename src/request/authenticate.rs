@@ -1,5 +1,5 @@
 use crate::client::Nidhogg;
-use crate::error::NidhoggError;
+use crate::error::Result;
 use crate::types::profile::Profile;
 use crate::types::user::User;
 use serde::{Deserialize, Serialize};
@@ -8,11 +8,9 @@ impl Nidhogg {
     pub async fn authenticate(
         &self,
         authenticate: &Authenticate,
-    ) -> Result<AuthenticateResponse, NidhoggError> {
+    ) -> Result<AuthenticateResponse> {
         Ok(self
-            .client
-            .post(format!("{}/authserver/authenticate", self.yggdrasil_url))
-            .json(authenticate)
+            .post_json("/authserver/authenticate", authenticate)
             .send()
             .await?
             .error_for_status()?

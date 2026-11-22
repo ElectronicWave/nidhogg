@@ -1,4 +1,4 @@
-use crate::error::NidhoggError;
+use crate::error::Result;
 use base64::Engine;
 use base64::prelude::BASE64_STANDARD;
 use serde::{Deserialize, Serialize};
@@ -15,7 +15,7 @@ pub struct Meta {
 }
 
 impl Meta {
-    pub fn get_base64(&self) -> Result<String, NidhoggError> {
+    pub fn get_base64(&self) -> Result<String> {
         Ok(BASE64_STANDARD.encode(serde_json::to_string(&self)?))
     }
 }

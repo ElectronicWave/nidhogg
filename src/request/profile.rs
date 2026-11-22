@@ -1,9 +1,9 @@
 use crate::client::Nidhogg;
-use crate::error::NidhoggError;
+use crate::error::Result;
 use crate::types::profile::Profile;
 
 impl Nidhogg {
-    pub async fn get_profile(&self, uuid: String, unsigned: bool) -> Result<Profile, NidhoggError> {
+    pub async fn get_profile(&self, uuid: String, unsigned: bool) -> Result<Profile> {
         Ok(self
             .client
             .get(format!(
@@ -17,11 +17,9 @@ impl Nidhogg {
             .await?)
     }
 
-    pub async fn get_profiles(&self, names: Vec<String>) -> Result<Vec<Profile>, NidhoggError> {
+    pub async fn get_profiles(&self, names: Vec<String>) -> Result<Vec<Profile>> {
         Ok(self
-            .client
-            .post(format!("{}/api/profiles/minecraft", self.yggdrasil_url))
-            .json(&names)
+            .post_json("/api/profiles/minecraft", &names)
             .send()
             .await?
             .error_for_status()?

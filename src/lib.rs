@@ -10,13 +10,13 @@ pub mod types;
 #[cfg(test)]
 mod tests {
     use crate::client::Nidhogg;
-    use crate::error::NidhoggError;
+    use crate::error::Result;
     use crate::request::authenticate::Authenticate;
 
     const MOCK_API_ROOT: &str = "https://auth-demo.yushi.moe";
 
     #[tokio::test]
-    async fn get_metadata() -> Result<(), NidhoggError> {
+    async fn get_metadata() -> Result<()> {
         let nidhogg = Nidhogg::new(MOCK_API_ROOT)?;
         println!("{:?}", nidhogg.metadata().await?);
         assert_eq!(
@@ -33,7 +33,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn authenticate() -> Result<(), NidhoggError> {
+    async fn authenticate() -> Result<()> {
         let nidhogg = Nidhogg::new(MOCK_API_ROOT)?;
         let authenticate_response = nidhogg
             .authenticate(&Authenticate::new(
