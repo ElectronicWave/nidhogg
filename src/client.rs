@@ -1,5 +1,5 @@
 use crate::error::Result;
-use crate::types::meta::Meta;
+use crate::types::meta::{Meta, MetadataDocument};
 use reqwest::header::{ACCEPT_CHARSET, CONTENT_TYPE, HeaderMap, HeaderValue};
 use reqwest::{Client, RequestBuilder};
 use serde::Serialize;
@@ -39,16 +39,23 @@ impl Nidhogg {
             .json(body)
     }
 
-    pub async fn metadata(&self) -> Result<Meta> {
-        Ok(self
+    pub async fn metadata_document(&self) -> Result<MetadataDocument> {
+        let raw = self
             .client
             .get(format!("{}/", self.yggdrasil_url))
             .header(ACCEPT_CHARSET, HeaderValue::from_static("UTF-8"))
             .send()
             .await?
             .error_for_status()?
-            .json()
-            .await?)
+            .text()
+            .await?;
+
+        let meta = serde_json::from_str(&raw)?;
+        Ok(MetadataDocument { meta, raw })
+    }
+
+    pub async fn metadata(&self) -> Result<Meta> {
+        Ok(self.metadata_document().await?.meta)
     }
 }
 
@@ -112,5 +119,62 @@ mod tests {
         assert!(request.contains("x-custom-client: nidhogg-test"));
         assert!(request.contains("accept-charset: utf-8"));
         assert!(request.contains("content-type: application/json"));
+    }
+
+    #[tokio::test]
+    async fn metadata_document_preserves_raw_body_and_tolerates_omissions() {
+        const BODY: &str = r#"{"meta":{"serverName":"Test","links":{"homepage":"https://example.org"},"feature.non_email_login":true},"unknownTopLevel":{"x":1}}"#;
+
+        let listener = TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind listener");
+        let addr = listener.local_addr().expect("listener addr");
+
+        let server = tokio::spawn(async move {
+            let (mut stream, _) = listener.accept().await.expect("accept request");
+            let mut buffer = vec![0u8; 4096];
+            let mut data = Vec::new();
+            loop {
+                let read = stream.read(&mut buffer).await.expect("read request");
+                if read == 0 {
+                    break;
+                }
+                data.extend_from_slice(&buffer[..read]);
+                if data.windows(4).any(|window| window == b"\r\n\r\n") {
+                    break;
+                }
+            }
+
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                BODY.len(),
+                BODY
+            );
+            stream
+                .write_all(response.as_bytes())
+                .await
+                .expect("write response");
+        });
+
+        let client = reqwest::Client::builder()
+            .no_proxy()
+            .build()
+            .expect("build client");
+        let nidhogg = Nidhogg::with_client(&format!("http://{addr}"), client);
+        let document = nidhogg
+            .metadata_document()
+            .await
+            .expect("fetch metadata document");
+
+        assert_eq!(document.raw, BODY);
+        assert_eq!(document.meta.meta.server_name.as_deref(), Some("Test"));
+        assert!(document.meta.skin_domains.is_empty());
+        assert!(document.meta.signature_public_key.is_empty());
+
+        let links = document.meta.meta.links.expect("links");
+        assert_eq!(links.homepage, "https://example.org");
+        assert!(links.register.is_empty());
+
+        server.await.expect("join server");
     }
 }
